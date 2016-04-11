@@ -52,15 +52,31 @@ export default function Email(props) {
         `}} />
       </head>
       <body style={{
-        width: '100%',
-        margin: '0',
         padding: '0',
+        margin: '0',
         WebkitTextSizeAdjust: '100%',
         MsTextSizeAdjust: '100%',
+        backgroundColor: props.bgcolor,
       }}>
-        <Box width="100%" height="100%" bgcolor={props.bgcolor}>
+        <Box
+          bgcolor={props.bgcolor}
+          align="center"
+          valign="top"
+          style={{
+            width: '100% !important',
+            lineHeight: '100% !important',
+          }}>
           <Item align="center" valign="top">
-            <Box width="600" align="center" cellPadding={props.cellPadding} cellSpacing={props.cellSpacing} style={props.style}>
+            <Box
+              align="center"
+              cellPadding={props.cellPadding}
+              cellSpacing={props.cellSpacing}
+              width={props.width}
+              id="content"
+              style={{
+                ...props.style
+              }}
+            >
               {props.children}
             </Box>
           </Item>
@@ -77,9 +93,12 @@ Email.propTypes = {
   cellSpacing: PropTypes.number,
   style: EmailPropTypes.style,
   children: PropTypes.node,
+  width: PropTypes.number,
   css: PropTypes.string
 }
 
 Email.defaultProps = {
+  style: {},
+  width: 600,
   css: ''
 }
