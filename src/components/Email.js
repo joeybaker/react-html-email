@@ -3,6 +3,28 @@ import EmailPropTypes from '../PropTypes'
 import Box from './Box'
 import Item from './Item'
 
+function singleLineString(strings, ...values) {
+  // Interweave the strings with the
+  // substitution vars first.
+  // let output = ''
+  // const valuesLength = values.length
+  // for (let i = 0; i < valuesLength; i++) {
+  //   output += strings[i] + values[i]
+  // }
+  // output += strings[values.length]
+  const output = values.reduce((out, value, i) => {
+    return out += strings[i] + values[i]
+  }, '') + strings[values.length]
+
+  // Split on newlines.
+  const lines = output.split(/(?:\r\n|\n|\r)/)
+
+  // Rip out the leading whitespace.
+  return lines.map((line) => {
+    return line.replace(/^\s+/gm, '')
+  }).join(' ').trim()
+}
+
 // inspired by http://htmlemailboilerplate.com
 export default function Email(props) {
   // default nested 600px wide outer table container (see http://templates.mailchimp.com/development/html/)
@@ -12,6 +34,22 @@ export default function Email(props) {
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>{props.title}</title>
+        <style dangerouslySetInnerHTML={{__html: singleLineString`
+          #content {
+            max-width: ${props.width}px !important;
+          }
+
+          table td {
+            border-collapse: collapse;
+          }
+
+          @media (max-width: ${props.width}px) {
+            #content {
+              width: 100% !important;
+            }
+          }
+          ${props.css}
+        `}} />
       </head>
       <body style={{
         width: '100%',
@@ -39,4 +77,9 @@ Email.propTypes = {
   cellSpacing: PropTypes.number,
   style: EmailPropTypes.style,
   children: PropTypes.node,
+  css: PropTypes.string
+}
+
+Email.defaultProps = {
+  css: ''
 }

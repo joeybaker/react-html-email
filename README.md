@@ -96,6 +96,8 @@ It's necessary to always include a `title` prop for some clients' "open in brows
 
 See [MailChimp's HTML guide](http://templates.mailchimp.com/development/html/) for how this works.
 
+It also takes a `css` property. This is a string that will be applied as a `<style>` tag.
+
 ### `<Box>`
 
 A simplification of the `<table>` element, the workhorse of an HTML email design. `<Box>`es contain a vertical stack of `<Item>`s. Use them to create visual structure, filled buttons, and spacing.
