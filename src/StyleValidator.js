@@ -1,6 +1,16 @@
 import supportMatrix from './supportMatrix.json'
 
 const capsRe = /[A-Z]/g
+const tagsInMsg = [
+  'div'
+  , 'p'
+  , 'td'
+]
+
+const mapComponentsToTags = {
+  'Box': 'table'
+  , 'Item': 'td'
+}
 
 export default class StyleValidator {
   constructor(config) {
@@ -43,10 +53,13 @@ export default class StyleValidator {
       this.config.platforms.forEach(platform => {
         if (typeof supportInfo[platform] === 'string') {
           const msg = supportInfo[platform]
-          if (!messages.has(msg)) {
-            messages.set(msg, [])
+          if (msg.includes(` ${mapComponentsToTags[componentName]} `)) {
+            console.log(msg)
+            if (!messages.has(msg)) {
+              messages.set(msg, [])
+            }
+            messages.get(msg).push(platform)
           }
-          messages.get(msg).push(platform)
         } else if (supportInfo[platform] === false) {
           unsupported.push(platform)
         }
