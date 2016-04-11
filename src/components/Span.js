@@ -3,14 +3,19 @@ import EmailPropTypes from '../PropTypes'
 
 export default function Span(props) {
   return (
-    <span style={{
-      fontFamily: props.fontFamily,
-      fontSize: props.fontSize,
-      fontWeight: props.fontWeight,
-      lineHeight: (props.lineHeight !== undefined ? props.lineHeight : props.fontSize) + 'px',
-      color: props.color,
-      ...props.style,
-    }}>{props.children}</span>
+    <span
+      style={{
+        fontFamily: props.fontFamily,
+        fontSize: props.fontSize,
+        fontWeight: props.fontWeight,
+        lineHeight: (props.lineHeight !== undefined ? props.lineHeight : props.fontSize) + 'px',
+        color: props.color,
+        ...props.style,
+      }}
+      className={props.className}
+    >
+        {props.children}
+    </span>
   )
 }
 
@@ -22,10 +27,11 @@ Span.propTypes = {
   color: PropTypes.string,
   style: EmailPropTypes.style,
   children: PropTypes.node,
+  className: PropTypes.string
 }
 
 Span.defaultProps = {
-  fontFamily: 'sans-serif',
+  fontFamily: 'Helvetica Neue, Lucida Grande, Arial, Sans, sans-serif',
   fontSize: 14,
   color: '#000',
 }
